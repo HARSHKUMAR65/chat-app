@@ -31,3 +31,9 @@ A simple, real-time chat application built using **React Native**, designed to m
 - **React Navigation** — Routing between screens
 - **Context API** — Global auth state management
 - **Custom Hooks** — Clean separation of API logic
+
+
+![WhatsApp Image 2025-06-15 at 00 23 46 (2)](https://github.com/user-attachments/assets/7c3984e4-2460-4398-b550-0d17dc6f08e0)
+![WhatsApp Image 2025-06-15 at 00 23 46 (1)](https://github.com/user-attachments/assets/329c8319-199c-4039-bd1a-f6bc0a27821a)
+![WhatsApp Image 2025-06-15 at 00 23 46](https://github.com/user-attachments/assets/ec868a65-37da-4d18-916e-780733ec1d25)
+![WhatsApp Image 2025-06-15 at 00 23 45](https://github.com/user-attachments/assets/f14dab78-6e90-48ac-aa39-5ccabd614e15)
