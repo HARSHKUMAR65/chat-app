@@ -4,23 +4,9 @@ import NoInternet from './screen/NoInternet';
 import AppNavigator from './navigation/Route';
 import { Text } from 'react-native';
 import { AuthProvider } from './context/AuthContext';
-// import axios from 'axios';
 
 const App: React.FC = () => {
-  // const fetchData = () => {
-  //   axios.get('https://assignment-backend-1u7v.onrender.com/api/testing', {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json',
-  //     },
-  //     withCredentials: true,
-  //   })
-  //     .then(response => console.log(response))
-  //     .catch(error => console.error(error));
-  // };
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+
   useEffect(() => {
     // @ts-ignore
     Text.defaultProps = Text.defaultProps || {};

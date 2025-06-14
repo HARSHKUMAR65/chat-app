@@ -10,31 +10,28 @@ import {
 } from 'react-native';
 import useMessageAPI from '../hooks/use-messageData';
 import { useAuth } from '../context/AuthContext';
-import useAuthAPI from '../hooks/use-auth'; // Import auth API hook
+import useAuthAPI from '../hooks/use-auth';
 
-const MessagesScreen = ({ navigation }) => {
+const MessagesScreen = ({ navigation } : any) => {
   const [Messages, setMessages] = useState([]);
-  const { user, ChangeAuth } = useAuth(); // Auth context
+  const { user, ChangeAuth } = useAuth();
   const { getLastMessages } = useMessageAPI();
   const { logout } = useAuthAPI();
 
   useEffect(() => {
     console.log('Fetching messages...');
     const fetchMessages = async () => {
-        console.log('Fetching messages.....');
       const messages = await getLastMessages();
-      console.log('messages');
       setMessages(messages);
     };
-    
     fetchMessages();
   }, []);
 
   const handleLogout = async () => {
     const confirmed = await new Promise((resolve) => {
-      Alert.alert("Logout", 'Are you sure you want to logout?', [
-        { text: "Cancel", style: "cancel", onPress: () => resolve(false) },
-        { text: "Logout", style: "destructive", onPress: () => resolve(true) },
+      Alert.alert('Logout', 'Are you sure you want to logout?', [
+        { text: 'Cancel', style: 'cancel', onPress: () => resolve(false) },
+        { text: 'Logout', style: 'destructive', onPress: () => resolve(true) },
       ]);
     });
 
@@ -44,8 +41,8 @@ const MessagesScreen = ({ navigation }) => {
     }
   };
 
-  const renderItem = ({ item }) => {
-    if (!user) return null;
+  const renderItem = ({ item } : any) => {
+    if (!user) { return null; }
 
     const isSender = item.sender?.id === user.id;
     const otherUser = isSender ? item.receiver : item.sender;
@@ -78,7 +75,6 @@ const MessagesScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Logout Header */}
       <View style={styles.logoutHeader}>
         <Text style={styles.headerTitle}>Messages</Text>
         <TouchableOpacity onPress={handleLogout}>
@@ -88,6 +84,7 @@ const MessagesScreen = ({ navigation }) => {
 
       <FlatList
         data={Messages}
+        // @ts-ignore
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}

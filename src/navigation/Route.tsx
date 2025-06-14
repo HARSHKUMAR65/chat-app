@@ -5,7 +5,7 @@ import LoginScreen from '../screen/Login';
 import ChatScreen from '../screen/ChatScreen';
 import Loading from '../screen/Loading';
 import { useAuth } from '../context/AuthContext';
-import MessageScreen from '../screen/MessageScreen'
+import MessageScreen from '../screen/MessageScreen';
 export type RootStackParamList = {
     login: undefined;
     Chat: undefined;
@@ -30,7 +30,10 @@ const AppNavigator: React.FC = () => {
                 {!isAuthenticated ? (
                     <Stack.Screen name="login" component={LoginScreen} />
                 ) : (
-                    <><Stack.Screen name="Message" component={MessageScreen} /><Stack.Screen name="Chat" component={ChatScreen} /></>
+                    <>
+                        <Stack.Screen name="Message" component={MessageScreen} />
+                        <Stack.Screen name="Chat" component={ChatScreen} />
+                    </>
                 )}
             </Stack.Navigator>
         </NavigationContainer>

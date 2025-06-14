@@ -21,14 +21,14 @@ type Message = {
   timestamp: string;
 };
 
-const ChatScreen = ({ route }) => {
+const ChatScreen = ({ route } : any) => {
   const flatListRef = useRef<FlatList<Message>>(null);
   const { user } = useAuth();
   const { getMessages, sendMessage } = useMessageAPI();
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
-
+const [loader, setLoader] = useState(false);
   const receiverId = route.params?.userId;
 
   useEffect(() => {
@@ -40,12 +40,8 @@ const ChatScreen = ({ route }) => {
     };
 
     fetchMessages();
-
-    // ✅ Join chat room
     socket.connect();
-    socket.emit('join_chat', { userId: user.id, partnerId: receiverId });
-
-    // ✅ Listen to new messages
+    socket.emit('join', String(user.id));
     socket.on('receive_message', (msg: Message) => {
       if (
         (msg.sender_id === receiverId && msg.receiver_id === user.id) ||
@@ -54,28 +50,25 @@ const ChatScreen = ({ route }) => {
         setMessages(prev => [...prev, msg]);
       }
     });
-
     return () => {
-      // ✅ Leave chat room and cleanup
-      socket.emit('leave_chat', { userId: user.id, partnerId: receiverId });
+      socket.emit('leave', String(user.id));
       socket.off('receive_message');
       socket.disconnect();
     };
-  }, [user?.id, receiverId]);
+  }, [user.id, receiverId, getMessages]);
 
-  // Scroll to bottom on new messages
   useEffect(() => {
     flatListRef.current?.scrollToEnd({ animated: true });
   }, [messages]);
 
   const handleSend = async () => {
-    if (!newMessage.trim()) return;
+    setLoader(true);
+    if (!newMessage.trim()) {return setLoader(false);}
 
     const msg = await sendMessage(user.id, receiverId, newMessage);
     if (msg) {
       setNewMessage('');
-      setMessages(prev => [...prev, msg]);
-      socket.emit('send_message', msg); // Real-time push
+      setLoader(false);
     }
   };
 
@@ -119,7 +112,7 @@ const ChatScreen = ({ route }) => {
           multiline
         />
         <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
-          <Text style={styles.sendButtonText}>Send</Text>
+          <Text style={styles.sendButtonText}>{loader ? 'Sending...' : 'Send'}</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

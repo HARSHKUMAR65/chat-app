@@ -6,7 +6,6 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Alert,
 } from 'react-native';
 
 interface Errors {
@@ -18,7 +17,7 @@ const LoginScreen: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const [secureText, setSecureText] = useState<boolean>(true);
   const [errors, setErrors] = useState<Errors>({});
-  const { login } = useAuthAPI();
+  const { login , loading } = useAuthAPI();
 
   const validateEmail = (value: string): boolean => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,10 +49,10 @@ const LoginScreen: React.FC = () => {
   };
 
   const handleLogin = async () => {
-    if (!validateInputs()) return;
+    if (!validateInputs()) {return;}
 
-    await login(email, password);
-
+    const isLoggedIn = await login(email, password);
+    console.log(isLoggedIn);
   };
 
   return (
@@ -87,7 +86,7 @@ const LoginScreen: React.FC = () => {
       )}
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Sign In</Text>
+        <Text style={styles.buttonText}>{loading ? 'Loading...' : 'Login'}</Text>
       </TouchableOpacity>
     </View>
   );

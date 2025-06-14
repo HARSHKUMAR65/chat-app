@@ -1,12 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 const NoInternet: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <Icon name="wifi" size={80} color="black" style={styles.icon} />
         <Text style={styles.noConnectionText}>
           Sorry, no internet connection.
         </Text>
@@ -50,20 +48,6 @@ const styles = StyleSheet.create({
   reconnectText: {
     fontSize: 16,
     color: '#666',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  retryButton: {
-    backgroundColor: '#007BFF',
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 30,
-    elevation: 5,
-  },
-  retryButtonText: {
-    fontSize: 16,
-    color: '#fff',
-    fontWeight: 'bold',
     textAlign: 'center',
   },
 });

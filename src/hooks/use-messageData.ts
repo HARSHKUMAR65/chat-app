@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 import socket from '../utils/Socket';
 const TOKEN_KEY = 'token';
 
-const useMessageAPI =  () => {
+const useMessageAPI = () => {
     const getToken = async (): Promise<string | null> => {
         return await AsyncStorage.getItem(TOKEN_KEY);
     };
@@ -73,7 +73,6 @@ const useMessageAPI =  () => {
             return data?.data || [];
         } catch (error: any) {
             console.error('Fetch last messages error:', error);
-            Alert.alert('Error', error?.response?.data?.message || 'Failed to fetch last messages');
             return [];
         }
     };

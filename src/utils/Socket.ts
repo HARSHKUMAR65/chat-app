@@ -1,4 +1,4 @@
-// socket.js
+
 import { io } from 'socket.io-client';
 
 const SOCKET_URL = 'https://assignment-backend-uy3h.onrender.com/';

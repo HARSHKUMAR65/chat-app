@@ -3,12 +3,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ApiBaseURL } from '../axios';
 import { useAuth } from '../context/AuthContext';
 import { Alert } from 'react-native';
-
+import { useState } from 'react';
 const TOKEN_KEY = 'token';
 
 const useAuthAPI = () => {
     const { ChangeAuth } = useAuth();
+    const [loading, setLoading] = useState(false);
     const login = async (email: string, password: string): Promise<boolean> => {
+        setLoading(true);
         try {
             const data = await axios.post(`${ApiBaseURL.baseURL}login`, {
                 email,
@@ -22,16 +24,15 @@ const useAuthAPI = () => {
             if (data.data.data?.accessToken) {
                 console.log(data.data.data.accessToken);
                 await AsyncStorage.setItem(TOKEN_KEY, data.data.data.accessToken);
-                console.log('Login successful');
                 ChangeAuth(true);
-                console.log('Login successful');
+                setLoading(false);
                 return true;
             }
-            console.log('Login failed');
             return false;
         } catch (error: any) {
             // console.error('Login error dsasds:', error.response.data.message);
             Alert.alert('Error', error.response.data.message);
+            setLoading(false);
             return false;
         }
     };
@@ -74,6 +75,7 @@ const useAuthAPI = () => {
         login,
         logout,
         getCurrentUser,
+        loading,
     };
 };
 
